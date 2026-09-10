@@ -1,0 +1,13 @@
+Week 3 Air Conditioner Debugging
+
+1. Which line was causing the RecursionError, and why does storing into self._temperature fix it?
+
+The line causing the RecursionError was self.temperature = value inside the temperature setter. It caused the setter to call itself again and again. This created an infinite loop and eventually caused a RecursionError. Using self._temperature = value fixes this because it stores the value directly without calling the setter again.
+
+2. Bug 5 still lets 99 through even after you fix the setter. What was the constructor doing wrong?
+
+The constructor was using self._temperature = temperature, which stored the temperature directly and bypassed the temperature setter. Because of this, invalid values such as 99 could be accepted. Changing it to self.temperature = temperature makes the constructor use the setter, so the temperature is checked before it is stored.
+
+3. Why should is_energy_saving be calculated each time instead of stored once?
+
+is_energy_saving should be calculated each time because the temperature can change after the AirConditioner is created. If the result is stored only once, it can become outdated. Calculating it from the current temperature makes sure that is_energy_saving always shows the correct current state.
